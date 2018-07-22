@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+
+    <div class="clock">
+      <div class="clock-face">
+      	<!-- note the following have  two classes applied to it, .hand and (i.e.) .hour-hand -->
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+        <div class="center-pin"></div>
+      </div>
+    </div>
+
+
+  <style>
+    html {
+      background:#018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
+      background-size:cover;
+      font-family:'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display:flex;
+      flex:1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border:20px solid white;
+      border-radius:50%;
+      margin:50px auto;
+      position: relative;
+      padding:2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width:50%;
+      height:6px;
+      background:black;
+      position: absolute; /* This keeps the position relative to the ancestor which in this case is .clock-face */
+      top:50%;
+      transform-origin: 100%; /* keeps the pivot point to the very right of the x-axis */
+      transform: rotate(90deg); /* Rotates clock to be aligned to a normal clock location */
+      transition: all 0.5s;
+      transition-timing-function: ease-in-out;
+    }
+
+    .second-hand{
+    	background-color: white;
+    	width:50%;
+    }
+
+    .min-hand{
+    	background-color: grey;
+    	width:50%;
+    }
+
+
+    .hour-hand{
+    	width:50%;
+    }
+
+    /* .center-pin {
+    	height: 5%;
+    	width: 5%;
+    	background:white;
+    	background-color: white;
+    	position: absolute;
+
+    }
+*/
+
+  </style>
+
+  <script>
+  	const secondsHand = document.querySelector('.second-hand');
+  	const minutesHand = document.querySelector('.min-hand');
+  	const hoursHand = document.querySelector('.hour-hand');
+
+  	function setDate(){
+  		// Data fields
+  		const now = new Date();
+  		const seconds = now.getSeconds();
+  		const secondsDegrees = ((seconds/60) * 360) + 90; // offset by 90 due to intial transform
+
+  		const minutes = now.getMinutes();
+  		const minutesDegrees = ((minutes/60) * 360) + 90;
+
+  		const hours = now.getHours();
+  		const hoursDegrees = ((hours/12) * 360) + 90;
+
+  		secondsHand.style.transform = `rotate(${secondsDegrees}deg)`;
+  		minutesHand.style.transform = `rotate(${minutesDegrees}deg)`;
+  		hoursHand.style.transform = `rotate(${hoursDegrees}deg)`;
+  		console.log(seconds); // for construction purposes
+  	}
+
+
+
+
+
+  	setInterval(setDate,1000);
+  </script>
+</body>
+</html>
