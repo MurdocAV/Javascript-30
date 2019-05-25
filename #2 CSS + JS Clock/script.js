@@ -20,8 +20,4 @@ function setDate(){
     console.log(seconds); // for construction purposes
 }
 
-
-
-
-
 setInterval(setDate,1000);
